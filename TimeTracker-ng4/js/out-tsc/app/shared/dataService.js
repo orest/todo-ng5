@@ -15,7 +15,21 @@ require("rxjs/add/operator/map");
 var DataService = (function () {
     function DataService(http) {
         this.http = http;
+        this.products = [];
     }
+    DataService.prototype.loadTodos = function () {
+        var _this = this;
+        return this.http.get("/api/todos")
+            .map(function (data) {
+            _this.products = data;
+            return true;
+        });
+    };
+    DataService.prototype.saveTodo = function (todo) {
+        return this.http.post("/api/todos", todo, {}).map(function (p) {
+            return true;
+        });
+    };
     return DataService;
 }());
 DataService = __decorate([

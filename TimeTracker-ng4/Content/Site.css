@@ -16,9 +16,15 @@
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
+
+.margin-top-20{margin-top: 20px}
+a.no-decor{text-decoration: none}
+.color-red{color: red}
+.icon-larger{font-size: 16px; }
+
+.width100{width: 100%}
+.display-box{display:flex;width: 100%;justify-content: space-between}
+.display-box-item{flex-grow: 1;margin: 0 10px}
+.display-box-item:first-child{flex:0 0 70%}
+
+

@@ -161,12 +161,18 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Api\ToDosController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\ToDoContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711040018094_InitialCreate.cs" />
+    <Compile Include="Migrations\201711040018094_InitialCreate.Designer.cs">
+      <DependentUpon>201711040018094_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ToDo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -267,6 +273,11 @@
     <TypeScriptCompile Include="app\polyfills.ts" />
     <TypeScriptCompile Include="app\test.ts" />
     <TypeScriptCompile Include="app\typings.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711040018094_InitialCreate.resx">
+      <DependentUpon>201711040018094_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

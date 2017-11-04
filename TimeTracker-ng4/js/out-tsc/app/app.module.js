@@ -11,6 +11,7 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/common/http");
 var app_component_1 = require("./app.component");
 var todo_component_1 = require("./todo.component");
+var dataService_1 = require("./shared/dataService");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -26,7 +27,7 @@ AppModule = __decorate([
             platform_browser_1.BrowserModule,
             http_1.HttpClientModule
         ],
-        providers: [],
+        providers: [dataService_1.DataService],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);
