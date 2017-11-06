@@ -45,6 +45,21 @@ var TodoComponent = (function () {
             //console.log(error);
         });
     };
+    TodoComponent.prototype.startTodo = function () {
+    };
+    TodoComponent.prototype.deleteTodo = function () {
+        var _this = this;
+        this.isError = false;
+        this.isSuccess = false;
+        this.dataService.deleteTodo(this.todo).subscribe(function (p) {
+            console.log(p);
+            _this.isSuccess = true;
+        }, function (error) {
+            _this.isError = true;
+            _this.errorMessage = error;
+            //console.log(error);
+        });
+    };
     return TodoComponent;
 }());
 TodoComponent = __decorate([

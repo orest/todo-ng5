@@ -19,6 +19,17 @@ export class DataService {
                 return true;
             });
     }
+
+    loadAllTodos(): Observable<boolean> {
+        return this.http.get("api/todos/all")
+            .map((data: ToDo[]) => {
+                this.todos = data;
+                return true;
+            });
+    }
+
+
+    
     getById(id): Observable<ToDo> {
         return this.http.get("/api/todos/" + id)
             .map((data: ToDo) => {
@@ -32,9 +43,9 @@ export class DataService {
         }).map(p => {
             return true;
         });
-	}
-	
-	
+    }
+
+
     public saveTodo(todo: ToDo) {
         return this.http.put("/api/todos/" + todo.id, todo, {
             //headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token),
@@ -43,4 +54,12 @@ export class DataService {
         });
     }
 
+    public deleteTodo(todo: ToDo) {
+        return this.http.delete("/api/todos/" + todo.id, {
+            //headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token),
+        }).map(p => {
+            return true;
+        });
+    }
+    //deleteTodo
 }

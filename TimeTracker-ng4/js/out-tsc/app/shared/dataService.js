@@ -41,6 +41,11 @@ var DataService = (function () {
             return true;
         });
     };
+    DataService.prototype.deleteTodo = function (todo) {
+        return this.http.delete("/api/todos/" + todo.id, {}).map(function (p) {
+            return true;
+        });
+    };
     return DataService;
 }());
 DataService = __decorate([

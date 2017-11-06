@@ -174,6 +174,14 @@ var DataService = (function () {
             return true;
         });
     };
+    DataService.prototype.loadAllTodos = function () {
+        var _this = this;
+        return this.http.get("api/todos/all")
+            .map(function (data) {
+            _this.todos = data;
+            return true;
+        });
+    };
     DataService.prototype.getById = function (id) {
         return this.http.get("/api/todos/" + id)
             .map(function (data) {
@@ -187,6 +195,11 @@ var DataService = (function () {
     };
     DataService.prototype.saveTodo = function (todo) {
         return this.http.put("/api/todos/" + todo.id, todo, {}).map(function (p) {
+            return true;
+        });
+    };
+    DataService.prototype.deleteTodo = function (todo) {
+        return this.http.delete("/api/todos/" + todo.id, {}).map(function (p) {
             return true;
         });
     };
@@ -220,7 +233,7 @@ var ToDo = (function () {
 /***/ "../../../../../app/app/todo/todo.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"navbar navbar-default\">\n\t<div class=\"header-nav\">\n\t\t<div class=\"navbar-brand\">\n\t\t\t<a routerLink=\"/\">\n\t\t\t\t<i class=\"glyphicon glyphicon-chevron-left\"></i> Back </a>\n\t\t</div>\n\t</div>\n</div>\n\n<hr>\n<div class=\"alert alert-success\" *ngIf=\"isSuccess\">\n\t\t<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n\t\t<strong>Successfully Saved</strong>\n\t\tData saved successfuly\n\t\n</div>\n\n<div class=\"alert alert-danger\" *ngIf=\"isError\">\n\t  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n\t{{errorMessage}}\n</div>\n\n<div class=\"panel panel-primary\">\n\t<div class=\"panel-heading\">Todo Details</div>\n\t<div class=\"panel-body\">\n\t\t<div class=\"col-md-10 col-md-offset-1\">\n\t\t\t<form novalidate #editForm=\"ngForm\" class=\"form-horizontal\">\n\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t<label class=\"col-md-2\">Title</label>\n\t\t\t\t\t<div class=\"col-md-10\">\n\t\t\t\t\t\t<input type=\"text\" name=\"title\" [(ngModel)]=\"todo.title\" #title=\"ngModel\" required class=\"form-control\">\n\t\t\t\t\t\t<div class=\"text-danger\" *ngIf=\"title.touched && title.invalid && title.errors.required\">required!</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t<label class=\"col-md-2\">Minutes Spent</label>\n\t\t\t\t\t<div class=\"col-md-2\">\n\t\t\t\t\t\t<input type=\"number\" name=\"minutesSpent\" [(ngModel)]=\"todo.minutesSpent\" class=\"form-control\">\n\t\t\t\t\t</div>\n\n\t\t\t\t</div>\n\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t<label class=\"col-md-2\">Priority</label>\n\t\t\t\t\t<div class=\"col-md-2\">\n\t\t\t\t\t\t<input type=\"text\" name=\"priority\" [(ngModel)]=\"todo.priority\" class=\"form-control\">\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t<div class=\"col-md-2\">\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"col-md-6\">\n\t\t\t\t\t\t<div class=\"checkbox\">\n\t\t\t\t\t\t\t<label>\n\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"isCompleted\" [(ngModel)]=\"todo.isCompleted\">Is Completed</label>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t<div class=\"col-md-2\">\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-6\">\n\t\t\t\t\t\t<button class=\"btn btn-success\" (click)=\"saveTodo()\" [disabled]=\"editForm.invalid\">Save</button>\n\t\t\t\t\t\t<a [routerLink]=\"['/']\"  class=\"btn btn-default\" >Cancel</a>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</form>\n\t\t</div>\n\n\n\t</div>\n</div>\n\n\n\n<!-- \nisCompleted: boolean;\nstarDate: Date;\nendDate: Date; -->"
+module.exports = "<div class=\"navbar navbar-default\">\r\n\t<div class=\"header-nav\">\r\n\t\t<div class=\"navbar-brand\">\r\n\t\t\t<a routerLink=\"/\">\r\n\t\t\t\t<i class=\"glyphicon glyphicon-chevron-left\"></i> Back </a>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n\r\n<hr>\r\n<div class=\"alert alert-success\" *ngIf=\"isSuccess\">\r\n\t<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\r\n\t\t<span aria-hidden=\"true\">&times;</span>\r\n\t</button>\r\n\t<strong>Successfully Saved</strong>\r\n\tData saved successfuly\r\n\r\n</div>\r\n\r\n<div class=\"alert alert-danger\" *ngIf=\"isError\">\r\n\t<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\r\n\t\t<span aria-hidden=\"true\">&times;</span>\r\n\t</button>\r\n\t{{errorMessage}}\r\n</div>\r\n\r\n<div class=\"panel panel-primary\">\r\n\t<div class=\"panel-heading\">Todo Details</div>\r\n\t<div class=\"panel-body\">\r\n\t\t<div class=\"col-md-10 col-md-offset-1\">\r\n\t\t\t<form novalidate #editForm=\"ngForm\" class=\"form-horizontal\">\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<label class=\"col-md-2\">Title</label>\r\n\t\t\t\t\t<div class=\"col-md-10\">\r\n\t\t\t\t\t\t<input type=\"text\" name=\"title\" [(ngModel)]=\"todo.title\" #title=\"ngModel\" required class=\"form-control\">\r\n\t\t\t\t\t\t<div class=\"text-danger\" *ngIf=\"title.touched && title.invalid && title.errors.required\">required!</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<label class=\"col-md-2\">Minutes Spent</label>\r\n\t\t\t\t\t<div class=\"col-md-2\">\r\n\t\t\t\t\t\t<input type=\"number\" name=\"minutesSpent\" [(ngModel)]=\"todo.minutesSpent\" class=\"form-control\">\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<button class=\"btn btn-default \" (click)=\"startTodo()\">\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t\t<span>\r\n\t\t\t\t\t\t\t\t<i class=\"glyphicon glyphicon-play\"></i>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t</button>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<label class=\"col-md-2\">Priority</label>\r\n\t\t\t\t\t<div class=\"col-md-2\">\r\n\t\t\t\t\t\t<input type=\"text\" name=\"priority\" [(ngModel)]=\"todo.priority\" class=\"form-control\">\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<label class=\"col-md-2\">Start Date</label>\r\n\t\t\t\t\t<div class=\"col-md-4\">\r\n\t\t\t\t\t\t<input type=\"text\" readonly value=\"{{todo.starDate}}\" class=\"form-control\">\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t\t<label class=\"col-md-2\">Completed Date</label>\r\n\t\t\t\t\t\t<div class=\"col-md-4\">\r\n\t\t\t\t\t\t\t<input type=\"text\" readonly value=\"{{todo.endDate|date:'medium'}}\" class=\"form-control\">\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<div class=\"col-md-2\">\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"col-md-6\">\r\n\t\t\t\t\t\t<div class=\"checkbox\">\r\n\t\t\t\t\t\t\t<label>\r\n\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"isCompleted\" [(ngModel)]=\"todo.isCompleted\">Is Completed</label>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\r\n\t\t\t\t</div>\r\n\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<div class=\"col-md-2\">\r\n\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t<div class=\"col-md-6\">\r\n\t\t\t\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t<button class=\"btn btn-success \" (click)=\"saveTodo()\" [disabled]=\"editForm.invalid\">\r\n\t\t\t\t\t\t\t\tSave\r\n\t\t\t\t\t\t\t\t<span>\r\n\t\t\t\t\t\t\t\t\t<i class=\"glyphicon glyphicon-floppy-disk\"></i>\r\n\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t</button>\r\n\t\t\t\t\t\t\t<button class=\"btn btn-danger \" (click)=\"deleteTodo()\">\r\n\t\t\t\t\t\t\t\tDelete\r\n\t\t\t\t\t\t\t\t<span>\r\n\t\t\t\t\t\t\t\t\t<i class=\"glyphicon glyphicon-trash\"> </i>\r\n\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t</button>\r\n\t\t\t\t\t\t\t<a [routerLink]=\"['/']\" class=\"btn btn-default\">\r\n\t\t\t\t\t\t\t\tCancel\r\n\t\t\t\t\t\t\t\t<span>\r\n\t\t\t\t\t\t\t\t\t<i class=\"glyphicon glyphicon-remove\"></i>\r\n\t\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\r\n\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</form>\r\n\t\t</div>\r\n\r\n\r\n\t</div>\r\n</div>\r\n\r\n\r\n\r\n<!-- \r\nisCompleted: boolean;\r\nstarDate: Date;\r\nendDate: Date; -->"
 
 /***/ }),
 
@@ -278,6 +291,21 @@ var TodoComponent = (function () {
             //console.log(error);
         });
     };
+    TodoComponent.prototype.startTodo = function () {
+    };
+    TodoComponent.prototype.deleteTodo = function () {
+        var _this = this;
+        this.isError = false;
+        this.isSuccess = false;
+        this.dataService.deleteTodo(this.todo).subscribe(function (p) {
+            console.log(p);
+            _this.isSuccess = true;
+        }, function (error) {
+            _this.isError = true;
+            _this.errorMessage = error;
+            //console.log(error);
+        });
+    };
     return TodoComponent;
 }());
 TodoComponent = __decorate([
@@ -296,7 +324,7 @@ var _a, _b;
 /***/ "../../../../../app/app/todo/todoList.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"display-box\">\n\t<!--<ul class=\"list-group display-box-item\">\n        <li class=\"list-group-item active\">Todos</li>\t\t    \n    </ul>-->\n\n\t<ul class=\"list-group display-box-item\" [sortablejs]=\"todos\" [sortablejsOptions]=\"sortOptions\">\n\n\t\t<li class=\"list-group-item\" *ngFor=\"let t of todos\">\n\t\t\t<!-- <span class=\"badge\">8 </span> -->\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-10\">\n\t\t\t\t\t<span class=\"drag-handle\">☰</span>\n\t\t\t\t\t{{t.title}}\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-2 text-right\">\n\t\t\t\t\t<a [routerLink]=\"['./todo',t.id]\" class=\"no-decor\">\n\t\t\t\t\t\t<span>\n\t\t\t\t\t\t\t<i class=\"icon-larger glyphicon glyphicon-pencil\"></i>\n\t\t\t\t\t\t</span>\n\t\t\t\t\t</a>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</li>\n\t</ul>\n\n\t<div class=\"panel panel-primary display-box-item\">\n\t\t<div class=\"panel-heading text-center\">Add New </div>\n\t\t<div class=\"panel-body\">\n\t\t\t<form novalidate #addForm=\"ngForm\">\n\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t<input type=\"text\" name=\"newItem\" [(ngModel)]=\"newToDo.title\" #newItem=\"ngModel\" required class=\"form-control\">\n\t\t\t\t\t<div class=\"text-danger\" *ngIf=\"newItem.touched && newItem.invalid && newItem.errors.required\">required!</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t<button class=\"btn btn-success width100\" (click)=\"addNewTodo(addForm)\" [disabled]=\"addForm.invalid\">ADD</button>\n\t\t\t\t</div>\n\t\t\t</form>\n\t\t</div>\n\t</div>\n\n</div>"
+module.exports = "<div class=\"panel-heading text-right\">\r\n\t<button class=\"btn btn-sm btn-info\" (click)=\"showAllToDos()\">Show All</button>\r\n</div>\r\n<div class=\"display-box\">\r\n\t<ul class=\"list-group display-box-item todo\" [sortablejs]=\"todos\" [sortablejsOptions]=\"sortOptions\">\r\n\t\t<li class=\"list-group-item  p-{{i}}\" *ngFor=\"let t of todos; let i = index\">\r\n\t\t\t<!-- <span class=\"badge\">8 </span> -->\r\n\t\t\t<div class=\"row\">\r\n\r\n\t\t\t\t<div *ngIf=\"t.isCompleted else elseBlock\">\r\n\t\t\t\t\t<div class=\"col-sm-9 col-xs-6\">\r\n\t\t\t\t\t\t<s>{{t.title}}</s>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"col-sm-3 col-xs-6 text-right\">\r\n\t\t\t\t\t\t<a [routerLink]=\"['./todo',t.id]\" class=\"no-decor\" class=\"btn btn-sm btn-default\">\r\n\t\t\t\t\t\t\t<span>\r\n\t\t\t\t\t\t\t\t<i class=\"icon-larger glyphicon glyphicon-pencil\"></i>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\r\n\t\t\t\t<ng-template #elseBlock>\r\n\t\t\t\t\t<div class=\"col-sm-9 col-xs-6\">\r\n\t\t\t\t\t\t<span class=\"drag-handle\">☰</span> {{t.title}}\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"col-sm-3 col-xs-6 text-right\">\r\n\t\t\t\t\t\t<a [routerLink]=\"['./todo',t.id]\" class=\"no-decor\" class=\"btn btn-sm btn-default\">\r\n\t\t\t\t\t\t\t<span>\r\n\t\t\t\t\t\t\t\t<i class=\"icon-larger glyphicon glyphicon-pencil\"></i>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t</a>\r\n\r\n\t\t\t\t\t\t<a (click)=\"markAsCompleted(t)\" class=\"btn btn-success\">\r\n\t\t\t\t\t\t\t<span>\r\n\t\t\t\t\t\t\t\t<i class=\"icon-larger glyphicon glyphicon glyphicon-ok \"></i>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t</a>\r\n\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</ng-template>\r\n\t\t\t</div>\r\n\t\t</li>\r\n\t</ul>\r\n\r\n\t<div class=\"panel panel-primary display-box-item\">\r\n\t\t<div class=\"panel-heading text-center\">Add New </div>\r\n\t\t<div class=\"panel-body\">\r\n\t\t\t<form novalidate #addForm=\"ngForm\">\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<textarea name=\"newItem\" [(ngModel)]=\"newToDo.title\" #newItem=\"ngModel\" required class=\"form-control\" rows=\"5\"></textarea>\r\n\t\t\t\t\t<div class=\"text-danger\" *ngIf=\"newItem.touched && newItem.invalid && newItem.errors.required\">required!</div>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<button class=\"btn btn-success width100\" (click)=\"addNewTodo(addForm)\" [disabled]=\"addForm.invalid\">ADD</button>\r\n\t\t\t\t</div>\r\n\t\t\t</form>\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>"
 
 /***/ }),
 
@@ -332,6 +360,7 @@ var TodoListComponent = (function () {
         this.sortOptions = {
             handle: ".drag-handle",
             ghostClass: "sortable-ghost",
+            //	filter: ".active",
             onUpdate: function (event) {
                 _this.postChangesToServer(event);
             }
@@ -343,6 +372,7 @@ var TodoListComponent = (function () {
     TodoListComponent.prototype.addNewTodo = function (form) {
         var _this = this;
         if (this.newToDo.title) {
+            this.newToDo.priority = this.todos.length + 1;
             this.dataService.createTodo(this.newToDo).subscribe(function (p) {
                 _this.reload();
                 form.resetForm();
@@ -354,25 +384,47 @@ var TodoListComponent = (function () {
     TodoListComponent.prototype.editTodo = function (todo) {
         this.router.navigate(["./todo", 1]);
     };
+    TodoListComponent.prototype.markAsCompleted = function (todo) {
+        var _this = this;
+        todo.isCompleted = true;
+        this.dataService.saveTodo(todo).subscribe(function (p) { return _this.reload(); });
+    };
     TodoListComponent.prototype.postChangesToServer = function (event) {
+        // var tempTodo = this.todos.splice(event.oldIndex - 1, 1);
+        // this.todos.splice(event.newIndex + 1, 0, tempTodo[0]);
         for (var index = 0; index < this.todos.length; index++) {
             var todo = this.todos[index];
             todo.priority = index;
+            console.log(todo);
             this.dataService.saveTodo(todo).subscribe();
         }
-        // console.log(this.todos);
-        // console.log(event);
+        //console.log(this.todos);
+        //console.log(event);
+    };
+    TodoListComponent.prototype.showAllToDos = function () {
+        var _this = this;
+        this.dataService.loadAllTodos().subscribe(function (p) {
+            _this.todos = _this.dataService.todos;
+            console.log(_this.todos);
+        }, function (error) {
+            console.log(error);
+        });
     };
     TodoListComponent.prototype.reload = function () {
         var _this = this;
         this.dataService.loadTodos().subscribe(function (p) {
             _this.todos = _this.dataService.todos;
+            console.log(_this.todos);
         }, function (error) {
             console.log(error);
         });
     };
     return TodoListComponent;
 }());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", String)
+], TodoListComponent.prototype, "mode", void 0);
 TodoListComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: "todos",

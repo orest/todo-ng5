@@ -23,6 +23,7 @@ var TodoListComponent = (function () {
         this.sortOptions = {
             handle: ".drag-handle",
             ghostClass: "sortable-ghost",
+            //	filter: ".active",
             onUpdate: function (event) {
                 _this.postChangesToServer(event);
             }
@@ -34,6 +35,7 @@ var TodoListComponent = (function () {
     TodoListComponent.prototype.addNewTodo = function (form) {
         var _this = this;
         if (this.newToDo.title) {
+            this.newToDo.priority = this.todos.length + 1;
             this.dataService.createTodo(this.newToDo).subscribe(function (p) {
                 _this.reload();
                 form.resetForm();
@@ -45,25 +47,38 @@ var TodoListComponent = (function () {
     TodoListComponent.prototype.editTodo = function (todo) {
         this.router.navigate(["./todo", 1]);
     };
+    TodoListComponent.prototype.markAsCompleted = function (todo) {
+        var _this = this;
+        todo.isCompleted = true;
+        this.dataService.saveTodo(todo).subscribe(function (p) { return _this.reload(); });
+    };
     TodoListComponent.prototype.postChangesToServer = function (event) {
+        // var tempTodo = this.todos.splice(event.oldIndex - 1, 1);
+        // this.todos.splice(event.newIndex + 1, 0, tempTodo[0]);
         for (var index = 0; index < this.todos.length; index++) {
             var todo = this.todos[index];
             todo.priority = index;
+            console.log(todo);
             this.dataService.saveTodo(todo).subscribe();
         }
-        // console.log(this.todos);
-        // console.log(event);
+        //console.log(this.todos);
+        //console.log(event);
     };
     TodoListComponent.prototype.reload = function () {
         var _this = this;
         this.dataService.loadTodos().subscribe(function (p) {
             _this.todos = _this.dataService.todos;
+            console.log(_this.todos);
         }, function (error) {
             console.log(error);
         });
     };
     return TodoListComponent;
 }());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], TodoListComponent.prototype, "mode", void 0);
 TodoListComponent = __decorate([
     core_1.Component({
         selector: "todos",

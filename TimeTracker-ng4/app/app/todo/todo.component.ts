@@ -40,4 +40,24 @@ export class TodoComponent implements OnInit {
 		});
 	}
 
+	public startTodo(){
+		
+	}
+	public deleteTodo() {
+		this.isError = false;
+		this.isSuccess = false;
+
+		this.dataService.deleteTodo(this.todo).subscribe(p => {
+			console.log(p);
+			this.isSuccess = true;
+		}, error => {
+			this.isError = true;
+			this.errorMessage = error;
+			//console.log(error);
+		});
+	}
+
+
+	
+
 }
