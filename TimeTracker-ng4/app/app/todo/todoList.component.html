@@ -1,28 +1,41 @@
 ﻿<div class="display-box">
-    <ul class="list-group display-box-item">
-        <li class="list-group-item active">Todos</li>
-        <li class="list-group-item" *ngFor="let t of todos">
-            <span class="badge">8 </span>
-            <a [routerLink]="['./todo',t.id]" class="no-decor">
-                <span><i class="icon-larger glyphicon glyphicon-pencil"></i></span>                
-            </a>
-            &nbsp; {{t.title}}
-        </li>
-    </ul>
+	<!--<ul class="list-group display-box-item">
+        <li class="list-group-item active">Todos</li>		    
+    </ul>-->
 
-    <div class="panel panel-primary display-box-item">
-        <div class="panel-heading text-center">Add New </div>
-        <div class="panel-body">
-            <form novalidate #addForm="ngForm">
-                <div class="form-group">
-                    <input type="text" name="newItem" [(ngModel)]="newToDo.title" #newItem="ngModel" required class="form-control">
-                    <div class="text-danger" *ngIf="newItem.touched && newItem.invalid && newItem.errors.required">required!</div>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-success width100" (click)="addNewTodo(addForm)" [disabled]="addForm.invalid">ADD</button>
-                </div>
-            </form>
-        </div>
-    </div>
+	<ul class="list-group display-box-item" [sortablejs]="todos" [sortablejsOptions]="sortOptions">
+
+		<li class="list-group-item" *ngFor="let t of todos">
+			<!-- <span class="badge">8 </span> -->
+			<div class="row">
+				<div class="col-md-10">
+					<span class="drag-handle">☰</span>
+					{{t.title}}
+				</div>
+				<div class="col-md-2 text-right">
+					<a [routerLink]="['./todo',t.id]" class="no-decor">
+						<span>
+							<i class="icon-larger glyphicon glyphicon-pencil"></i>
+						</span>
+					</a>
+				</div>
+			</div>
+		</li>
+	</ul>
+
+	<div class="panel panel-primary display-box-item">
+		<div class="panel-heading text-center">Add New </div>
+		<div class="panel-body">
+			<form novalidate #addForm="ngForm">
+				<div class="form-group">
+					<input type="text" name="newItem" [(ngModel)]="newToDo.title" #newItem="ngModel" required class="form-control">
+					<div class="text-danger" *ngIf="newItem.touched && newItem.invalid && newItem.errors.required">required!</div>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-success width100" (click)="addNewTodo(addForm)" [disabled]="addForm.invalid">ADD</button>
+				</div>
+			</form>
+		</div>
+	</div>
 
 </div>

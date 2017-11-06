@@ -15,18 +15,29 @@ require("rxjs/add/operator/map");
 var DataService = (function () {
     function DataService(http) {
         this.http = http;
-        this.products = [];
+        this.todos = [];
     }
     DataService.prototype.loadTodos = function () {
         var _this = this;
         return this.http.get("/api/todos")
             .map(function (data) {
-            _this.products = data;
+            _this.todos = data;
+            return true;
+        });
+    };
+    DataService.prototype.getById = function (id) {
+        return this.http.get("/api/todos/" + id)
+            .map(function (data) {
+            return data;
+        });
+    };
+    DataService.prototype.createTodo = function (todo) {
+        return this.http.post("/api/todos", todo, {}).map(function (p) {
             return true;
         });
     };
     DataService.prototype.saveTodo = function (todo) {
-        return this.http.post("/api/todos", todo, {}).map(function (p) {
+        return this.http.put("/api/todos/" + todo.id, todo, {}).map(function (p) {
             return true;
         });
     };

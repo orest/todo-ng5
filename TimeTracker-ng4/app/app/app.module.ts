@@ -9,6 +9,8 @@ import { TodoListComponent } from './todo/todoList.component';
 import { RouterModule } from '@angular/router';
 import { TodoComponent } from './todo/todo.component';
 
+import { SortablejsModule } from 'angular-sortablejs';
+
 let routes = [
     { path: "", component: TodoListComponent },
     { path: "todo/:id", component: TodoComponent },    
@@ -23,7 +25,8 @@ let routes = [
     imports: [
         BrowserModule,
         HttpClientModule,
-        FormsModule,
+		FormsModule,
+		SortablejsModule,
         RouterModule.forRoot(routes, {
             useHash: true,
             enableTracing: false

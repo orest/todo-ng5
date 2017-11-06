@@ -179,7 +179,8 @@
   <ItemGroup>
     <Content Include="app\app\app.component.css" />
     <Content Include="app\app\app.component.html" />
-    <Content Include="app\app\todo.component.html" />
+    <Content Include="app\app\todo\todo.component.html" />
+    <Content Include="app\app\todo\todoList.component.html" />
     <Content Include="app\favicon.ico" />
     <Content Include="app\index.html" />
     <Content Include="app\styles.css" />
@@ -266,7 +267,8 @@
     <TypeScriptCompile Include="app\app\app.component.ts" />
     <TypeScriptCompile Include="app\app\app.module.ts" />
     <TypeScriptCompile Include="app\app\shared\dataService.ts" />
-    <TypeScriptCompile Include="app\app\todo.component.ts" />
+    <TypeScriptCompile Include="app\app\todo\todo.component.ts" />
+    <TypeScriptCompile Include="app\app\todo\todoList.component.ts" />
     <TypeScriptCompile Include="app\environments\environment.prod.ts" />
     <TypeScriptCompile Include="app\environments\environment.ts" />
     <TypeScriptCompile Include="app\main.ts" />

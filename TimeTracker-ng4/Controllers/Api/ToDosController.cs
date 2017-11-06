@@ -13,7 +13,7 @@ namespace TimeTracker_ng4.Controllers.Api {
 
         // GET: api/ToDos
         public IQueryable<ToDo> GetToDos() {
-            return db.ToDos;
+            return db.ToDos.OrderBy(p=>p.Priority);
         }
 
         // GET: api/ToDos/5
