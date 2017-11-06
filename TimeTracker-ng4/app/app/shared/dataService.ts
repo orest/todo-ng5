@@ -29,7 +29,7 @@ export class DataService {
     }
 
 
-    
+
     getById(id): Observable<ToDo> {
         return this.http.get("/api/todos/" + id)
             .map((data: ToDo) => {
@@ -53,6 +53,13 @@ export class DataService {
             return true;
         });
     }
+
+    public startTodo(todo: ToDo) {
+        return this.http.put("api/todos/start/?id=" + todo.id, todo).map(p => {
+            return true;
+        });
+    }
+
 
     public deleteTodo(todo: ToDo) {
         return this.http.delete("/api/todos/" + todo.id, {

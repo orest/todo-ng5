@@ -53,16 +53,21 @@ var TodoListComponent = (function () {
         this.dataService.saveTodo(todo).subscribe(function (p) { return _this.reload(); });
     };
     TodoListComponent.prototype.postChangesToServer = function (event) {
-        // var tempTodo = this.todos.splice(event.oldIndex - 1, 1);
-        // this.todos.splice(event.newIndex + 1, 0, tempTodo[0]);
         for (var index = 0; index < this.todos.length; index++) {
             var todo = this.todos[index];
             todo.priority = index;
-            console.log(todo);
+            //console.log(todo)
             this.dataService.saveTodo(todo).subscribe();
         }
-        //console.log(this.todos);
-        //console.log(event);
+    };
+    TodoListComponent.prototype.showAllToDos = function () {
+        var _this = this;
+        this.dataService.loadAllTodos().subscribe(function (p) {
+            _this.todos = _this.dataService.todos;
+            //console.log(this.todos);
+        }, function (error) {
+            console.log(error);
+        });
     };
     TodoListComponent.prototype.reload = function () {
         var _this = this;

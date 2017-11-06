@@ -25,6 +25,14 @@ var DataService = (function () {
             return true;
         });
     };
+    DataService.prototype.loadAllTodos = function () {
+        var _this = this;
+        return this.http.get("api/todos/all")
+            .map(function (data) {
+            _this.todos = data;
+            return true;
+        });
+    };
     DataService.prototype.getById = function (id) {
         return this.http.get("/api/todos/" + id)
             .map(function (data) {
@@ -38,6 +46,11 @@ var DataService = (function () {
     };
     DataService.prototype.saveTodo = function (todo) {
         return this.http.put("/api/todos/" + todo.id, todo, {}).map(function (p) {
+            return true;
+        });
+    };
+    DataService.prototype.startTodo = function (todo) {
+        return this.http.put("api/todos/start/?id=" + todo.id, todo).map(function (p) {
             return true;
         });
     };

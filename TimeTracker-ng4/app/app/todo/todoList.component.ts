@@ -52,24 +52,19 @@ export class TodoListComponent implements OnInit {
 		this.dataService.saveTodo(todo).subscribe(p => this.reload());
 	}
 
-	postChangesToServer(event: any) {
-		// var tempTodo = this.todos.splice(event.oldIndex - 1, 1);
-		// this.todos.splice(event.newIndex + 1, 0, tempTodo[0]);
-
+	postChangesToServer(event: any) {	
 		for (var index = 0; index < this.todos.length; index++) {
 			var todo = this.todos[index];
 			todo.priority = index;
-			console.log(todo)
+			//console.log(todo)
 			this.dataService.saveTodo(todo).subscribe();
 		}
-		//console.log(this.todos);
-		//console.log(event);
 	}
 
 	showAllToDos(){
 		this.dataService.loadAllTodos().subscribe(p => {
 			this.todos = this.dataService.todos;
-			console.log(this.todos);
+			//console.log(this.todos);
 		}, error => {
 			console.log(error);
 		});

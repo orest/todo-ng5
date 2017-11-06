@@ -22,7 +22,7 @@ namespace TimeTracker_ng4.Migrations {
               p => p.Title,
               new ToDo() { Title = "Prepare Angular Class", Priority = 1 },
               new ToDo() { Title = "Walk the Dog", Priority = 2 },
-              new ToDo() { Title = "Hang some curtains", Priority = 3, StarDate = DateTime.Now.AddDays(-3), EndDate = DateTime.Now, MinutesSpent = 180 }
+              new ToDo() { Title = "Hang some curtains", Priority = 3, StartDate = DateTime.Now.AddDays(-3), EndDate = DateTime.Now, MinutesSpent = 180 }
 
             );
         }

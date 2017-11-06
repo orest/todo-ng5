@@ -1,11 +1,11 @@
 ﻿<div class="panel-heading text-right">
-	<button class="btn btn-sm btn-info" (click)="showAllToDos()">Show All</button>
+	<button class="btn btn-warning" (click)="showAllToDos()">Show All</button>
 </div>
 <div class="display-box">
 	<ul class="list-group display-box-item todo" [sortablejs]="todos" [sortablejsOptions]="sortOptions">
-		<li class="list-group-item  p-{{i}}" *ngFor="let t of todos; let i = index">
+		<li class="list-group-item "  [ngClass]="{'active':(!!t.startDate)}"  *ngFor="let t of todos; let i = index">
 			<!-- <span class="badge">8 </span> -->
-			<div class="row">
+			<div class="row ">
 
 				<div *ngIf="t.isCompleted else elseBlock">
 					<div class="col-sm-9 col-xs-6">
@@ -21,10 +21,11 @@
 				</div>
 
 				<ng-template #elseBlock>
-					<div class="col-sm-9 col-xs-6">
-						<span class="drag-handle">☰</span> {{t.title}}
+					<div class="col-sm-10 col-xs-6">
+						<span class="drag-handle">☰</span>
+						<span >{{t.title}}</span> 
 					</div>
-					<div class="col-sm-3 col-xs-6 text-right">
+					<div class="col-sm-2 col-xs-6 text-right">
 						<a [routerLink]="['./todo',t.id]" class="no-decor" class="btn btn-sm btn-default">
 							<span>
 								<i class="icon-larger glyphicon glyphicon-pencil"></i>

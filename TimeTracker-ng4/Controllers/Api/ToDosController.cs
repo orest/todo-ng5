@@ -10,28 +10,33 @@ using System.Web.Http.Description;
 using TimeTracker_ng4.Data;
 using TimeTracker_ng4.Models;
 
-namespace TimeTracker_ng4.Controllers.Api {
-    public class ToDosController : ApiController {
+namespace TimeTracker_ng4.Controllers.Api
+{
+    public class ToDosController : ApiController
+    {
         private ToDoContext db = new ToDoContext();
 
         // GET: api/ToDos
-        public IEnumerable GetToDos() {
-            return db.ToDos.Where(p=>!p.IsCompleted).OrderBy(p=>p.Priority).ToList();
+        public IEnumerable GetToDos()
+        {
+            return db.ToDos.Where(p => !p.IsCompleted).OrderBy(p => p.Priority).ToList();
         }
 
         [Route("api/todos/all")]
         public IEnumerable GetAll()
         {
-            var completed= db.ToDos.Where(p => p.IsCompleted).OrderBy(p => p.EndDate).ToList();
+            var completed = db.ToDos.Where(p => p.IsCompleted).OrderBy(p => p.EndDate).ToList();
             var notDone = db.ToDos.Where(p => !p.IsCompleted).OrderBy(p => p.Priority).ToList();
 
             return notDone.Concat(completed).ToList();
         }
         // GET: api/ToDos/5
         [ResponseType(typeof(ToDo))]
-        public IHttpActionResult GetToDo(int id) {
+        public IHttpActionResult GetToDo(int id)
+        {
             ToDo toDo = db.ToDos.Find(id);
-            if (toDo == null) {
+            if (toDo == null)
+            {
                 return NotFound();
             }
 
@@ -40,26 +45,35 @@ namespace TimeTracker_ng4.Controllers.Api {
 
         // PUT: api/ToDos/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutToDo(int id, ToDo toDo) {
-            if (!ModelState.IsValid) {
+        public IHttpActionResult PutToDo(int id, ToDo toDo)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
-            if (id != toDo.Id) {
+            if (id != toDo.Id)
+            {
                 return BadRequest();
             }
             if (toDo.IsCompleted)
             {
-                toDo.EndDate=DateTime.Now;
+                toDo.EndDate = DateTime.Now;
             }
             db.Entry(toDo).State = EntityState.Modified;
 
-            try {
+            try
+            {
                 db.SaveChanges();
-            } catch (DbUpdateConcurrencyException) {
-                if (!ToDoExists(id)) {
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ToDoExists(id))
+                {
                     return NotFound();
-                } else {
+                }
+                else
+                {
                     throw;
                 }
             }
@@ -67,10 +81,50 @@ namespace TimeTracker_ng4.Controllers.Api {
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+
+        [HttpPut]
+        [Route("api/todos/start")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult StartToDo(int id, ToDo toDo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var todo = db.ToDos.Find(id);
+            if (todo == null)
+            {
+                return NotFound();
+
+            }
+            todo.StartDate = DateTime.Now;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ToDoExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+
         // POST: api/ToDos
         [ResponseType(typeof(ToDo))]
-        public IHttpActionResult PostToDo(ToDo toDo) {
-            if (!ModelState.IsValid) {
+        public IHttpActionResult PostToDo(ToDo toDo)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
@@ -82,9 +136,11 @@ namespace TimeTracker_ng4.Controllers.Api {
 
         // DELETE: api/ToDos/5
         [ResponseType(typeof(ToDo))]
-        public IHttpActionResult DeleteToDo(int id) {
+        public IHttpActionResult DeleteToDo(int id)
+        {
             ToDo toDo = db.ToDos.Find(id);
-            if (toDo == null) {
+            if (toDo == null)
+            {
                 return NotFound();
             }
 
@@ -94,14 +150,17 @@ namespace TimeTracker_ng4.Controllers.Api {
             return Ok(toDo);
         }
 
-        protected override void Dispose(bool disposing) {
-            if (disposing) {
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
                 db.Dispose();
             }
             base.Dispose(disposing);
         }
 
-        private bool ToDoExists(int id) {
+        private bool ToDoExists(int id)
+        {
             return db.ToDos.Count(e => e.Id == id) > 0;
         }
     }
