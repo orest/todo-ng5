@@ -25,7 +25,7 @@ namespace TimeTracker_ng4
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/slate-theme.css",
+                      "~/Content/bootstrap-theme.css",
                       "~/Content/site.css"));
         }
     }

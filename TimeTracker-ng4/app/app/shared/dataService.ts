@@ -1,7 +1,7 @@
-﻿import { Injectable } from "@angular/core"
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { ToDo } from "./todo";
-import { Observable } from "rxjs/Observable";
+﻿import {Injectable} from "@angular/core"
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {ToDo} from "./todo";
+import {Observable} from "rxjs/Observable";
 
 import "rxjs/add/operator/map";
 
@@ -29,44 +29,38 @@ export class DataService {
     }
 
 
-
-    getById(id): Observable<ToDo> {
+    getById(id: number): Observable<ToDo> {
         return this.http.get("/api/todos/" + id)
             .map((data: ToDo) => {
-                return data
+                return data;
             });
     }
 
-    public createTodo(todo: ToDo) {
-        return this.http.post("/api/todos", todo, {
-            //headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token),
-        }).map(p => {
+    public createTodo(todo: ToDo): Observable<boolean> {
+        return this.http.post("/api/todos", todo).map(p => {
             return true;
         });
     }
 
 
-    public saveTodo(todo: ToDo) {
-        return this.http.put("/api/todos/" + todo.id, todo, {
-            //headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token),
-        }).map(p => {
+    public saveTodo(todo: ToDo): Observable<boolean> {
+        return this.http.put("/api/todos/" + todo.id, todo).map(p => {
             return true;
         });
     }
 
-    public startTodo(todo: ToDo) {
-        return this.http.put("api/todos/start/?id=" + todo.id, todo).map(p => {
+    public startTodo(todo: ToDo): Observable<boolean> {
+        return this.http.put("/api/todos/start/?id=" + todo.id, todo).map(p => {
             return true;
         });
     }
 
 
     public deleteTodo(todo: ToDo) {
-        return this.http.delete("/api/todos/" + todo.id, {
-            //headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token),
-        }).map(p => {
+        return this.http.delete("/api/todos/" + todo.id).map(p => {
             return true;
         });
     }
+
     //deleteTodo
 }
