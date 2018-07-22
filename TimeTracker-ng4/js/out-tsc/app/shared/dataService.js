@@ -40,22 +40,22 @@ var DataService = (function () {
         });
     };
     DataService.prototype.createTodo = function (todo) {
-        return this.http.post("/api/todos", todo, {}).map(function (p) {
+        return this.http.post("/api/todos", todo).map(function (p) {
             return true;
         });
     };
     DataService.prototype.saveTodo = function (todo) {
-        return this.http.put("/api/todos/" + todo.id, todo, {}).map(function (p) {
+        return this.http.put("/api/todos/" + todo.id, todo).map(function (p) {
             return true;
         });
     };
     DataService.prototype.startTodo = function (todo) {
-        return this.http.put("api/todos/start/?id=" + todo.id, todo).map(function (p) {
+        return this.http.put("/api/todos/start/?id=" + todo.id, todo).map(function (p) {
             return true;
         });
     };
     DataService.prototype.deleteTodo = function (todo) {
-        return this.http.delete("/api/todos/" + todo.id, {}).map(function (p) {
+        return this.http.delete("/api/todos/" + todo.id).map(function (p) {
             return true;
         });
     };
