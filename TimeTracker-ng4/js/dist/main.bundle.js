@@ -189,12 +189,12 @@ var DataService = (function () {
         });
     };
     DataService.prototype.createTodo = function (todo) {
-        return this.http.post("/api/todos", todo, {}).map(function (p) {
+        return this.http.post("/api/todos", todo).map(function (p) {
             return true;
         });
     };
     DataService.prototype.saveTodo = function (todo) {
-        return this.http.put("/api/todos/" + todo.id, todo, {}).map(function (p) {
+        return this.http.put("/api/todos/" + todo.id, todo).map(function (p) {
             return true;
         });
     };
@@ -204,7 +204,7 @@ var DataService = (function () {
         });
     };
     DataService.prototype.deleteTodo = function (todo) {
-        return this.http.delete("/api/todos/" + todo.id, {}).map(function (p) {
+        return this.http.delete("/api/todos/" + todo.id).map(function (p) {
             return true;
         });
     };
@@ -340,7 +340,7 @@ var _a, _b;
 /***/ "../../../../../app/app/todo/todoList.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"panel-heading text-right\">\r\n\t<button class=\"btn btn-warning\" (click)=\"showAllToDos()\">Show All</button>\r\n</div>\r\n<div class=\"display-box\">\r\n\t<ul class=\"list-group display-box-item todo\" [sortablejs]=\"todos\" [sortablejsOptions]=\"sortOptions\">\r\n\t\t<li class=\"list-group-item \"  [ngClass]=\"{'active':(!!t.startDate)}\"  *ngFor=\"let t of todos; let i = index\">\r\n\t\t\t<!-- <span class=\"badge\">8 </span> -->\r\n\t\t\t<div class=\"row \">\r\n\r\n\t\t\t\t<div *ngIf=\"t.isCompleted else elseBlock\">\r\n\t\t\t\t\t<div class=\"col-sm-9 col-xs-6\">\r\n\t\t\t\t\t\t<s>{{t.title}}</s>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"col-sm-3 col-xs-6 text-right\">\r\n\t\t\t\t\t\t<a [routerLink]=\"['./todo',t.id]\" class=\"no-decor\" class=\"btn btn-sm btn-default\">\r\n\t\t\t\t\t\t\t<span>\r\n\t\t\t\t\t\t\t\t<i class=\"icon-larger glyphicon glyphicon-pencil\"></i>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\r\n\t\t\t\t<ng-template #elseBlock>\r\n\t\t\t\t\t<div class=\"col-sm-10 col-xs-6\">\r\n\t\t\t\t\t\t<span class=\"drag-handle\">☰</span>\r\n\t\t\t\t\t\t<span >{{t.title}}</span> \r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"col-sm-2 col-xs-6 text-right\">\r\n\t\t\t\t\t\t<a [routerLink]=\"['./todo',t.id]\" class=\"no-decor\" class=\"btn btn-sm btn-default\">\r\n\t\t\t\t\t\t\t<span>\r\n\t\t\t\t\t\t\t\t<i class=\"icon-larger glyphicon glyphicon-pencil\"></i>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t</a>\r\n\r\n\t\t\t\t\t\t<a (click)=\"markAsCompleted(t)\" class=\"btn btn-success\">\r\n\t\t\t\t\t\t\t<span>\r\n\t\t\t\t\t\t\t\t<i class=\"icon-larger glyphicon glyphicon glyphicon-ok \"></i>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t</a>\r\n\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</ng-template>\r\n\t\t\t</div>\r\n\t\t</li>\r\n\t</ul>\r\n\r\n\t<div class=\"panel panel-primary display-box-item\">\r\n\t\t<div class=\"panel-heading text-center\">Add New </div>\r\n\t\t<div class=\"panel-body\">\r\n\t\t\t<form novalidate #addForm=\"ngForm\">\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<textarea name=\"newItem\" [(ngModel)]=\"newToDo.title\" #newItem=\"ngModel\" required class=\"form-control\" rows=\"5\"></textarea>\r\n\t\t\t\t\t<div class=\"text-danger\" *ngIf=\"newItem.touched && newItem.invalid && newItem.errors.required\">required!</div>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<button class=\"btn btn-success width100\" (click)=\"addNewTodo(addForm)\" [disabled]=\"addForm.invalid\">ADD</button>\r\n\t\t\t\t</div>\r\n\t\t\t</form>\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>"
+module.exports = "<div class=\"panel-heading text-right\">\r\n\t<button class=\"btn btn-warning\" (click)=\"showAllToDos()\">Show All</button>\r\n</div>\r\n<div class=\"display-box\">\r\n\t<ul class=\"list-group display-box-item todo\" [sortablejs]=\"todos\" [sortablejsOptions]=\"sortOptions\">\r\n\t\t<li class=\"list-group-item \"  [ngClass]=\"{'list-group-item-info':(!!t.startDate)}\"  *ngFor=\"let t of todos; let i = index\">\r\n\t\t\t<!-- <span class=\"badge\">8 </span> -->\r\n\t\t\t<div class=\"row \">\r\n\r\n\t\t\t\t<div *ngIf=\"t.isCompleted else elseBlock\">\r\n\t\t\t\t\t<div class=\"col-sm-9 col-xs-6\">\r\n\t\t\t\t\t\t<s>{{t.title}}</s>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"col-sm-3 col-xs-6 text-right\">\r\n\t\t\t\t\t\t<a [routerLink]=\"['./todo',t.id]\" class=\"no-decor\" class=\"btn btn-sm btn-default\">\r\n\t\t\t\t\t\t\t<span>\r\n\t\t\t\t\t\t\t\t<i class=\"icon-larger glyphicon glyphicon-pencil\"></i>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\r\n\t\t\t\t<ng-template #elseBlock>\r\n\t\t\t\t\t<div class=\"col-sm-10 col-xs-6\">\r\n\t\t\t\t\t\t<span class=\"drag-handle\">☰</span>\r\n\t\t\t\t\t\t<span >{{t.title}}</span> \r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"col-sm-2 col-xs-6 text-right\">\r\n\t\t\t\t\t\t<a [routerLink]=\"['./todo',t.id]\" class=\"no-decor\" class=\"btn btn-sm btn-default\">\r\n\t\t\t\t\t\t\t<span>\r\n\t\t\t\t\t\t\t\t<i class=\"icon-larger glyphicon glyphicon-pencil\"></i>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t</a>\r\n\r\n\t\t\t\t\t\t<a (click)=\"markAsCompleted(t)\" class=\"btn btn-success\">\r\n\t\t\t\t\t\t\t<span>\r\n\t\t\t\t\t\t\t\t<i class=\"icon-larger glyphicon glyphicon glyphicon-ok \"></i>\r\n\t\t\t\t\t\t\t</span>\r\n\t\t\t\t\t\t</a>\r\n\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</ng-template>\r\n\t\t\t</div>\r\n\t\t</li>\r\n\t</ul>\r\n\r\n\t<div class=\"panel panel-primary display-box-item\">\r\n\t\t<div class=\"panel-heading text-center\">Add New </div>\r\n\t\t<div class=\"panel-body\">\r\n\t\t\t<form novalidate #addForm=\"ngForm\">\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<textarea name=\"newItem\" [(ngModel)]=\"newToDo.title\" #newItem=\"ngModel\" required class=\"form-control\" rows=\"5\"></textarea>\r\n\t\t\t\t\t<div class=\"text-danger\" *ngIf=\"newItem.touched && newItem.invalid && newItem.errors.required\">required!</div>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"form-group\">\r\n\t\t\t\t\t<button class=\"btn btn-success width100\" (click)=\"addNewTodo(addForm)\" [disabled]=\"addForm.invalid\">ADD</button>\r\n\t\t\t\t</div>\r\n\t\t\t</form>\r\n\t\t</div>\r\n\t</div>\r\n\r\n</div>"
 
 /***/ }),
 
